@@ -1,0 +1,31 @@
+{
+  "name": "upload-server",
+  "version": "1.0.0",
+  "description": "FileUpload",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuhongda0315/upload-server.git"
+  },
+  "keywords": [
+    "FileUpload",
+    "base64-Image",
+    "ShowImage"
+  ],
+  "author": "yuhongda0315@163.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yuhongda0315/upload-server/issues"
+  },
+  "homepage": "https://github.com/yuhongda0315/upload-server#readme",
+  "devDependencies": {
+    "connect-multiparty": "^2.0.0",
+    "express": "^4.14.0",
+    "multiparty": "^4.1.2",
+    "node-uuid": "^1.4.7",
+    "path": "^0.12.7"
+  }
+}
