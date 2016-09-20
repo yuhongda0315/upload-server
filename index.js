@@ -1,4 +1,4 @@
-var express      = require('express')
+var express      = require('express');
 var multiparty   = require('connect-multiparty');
 var uuid         = require('node-uuid');
 var fs           = require('fs');
@@ -6,9 +6,11 @@ var path         = require('path');
 var querystring  = require("querystring");
 var url          = require('url');
 
-var app = express()
+var app = express();
 var multipartMiddleware = multiparty();
 app.use(multiparty({uploadDir:'./file' }));
+
+// 设置允许跨域,生产环境慎用。
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
@@ -18,9 +20,9 @@ app.all('*', function(req, res, next) {
     next();
 });
 
+// 截图
 app.post('/base64', function(req, resp){
-    var imgData = req.body.imgData,
-        base64Data = imgData.replace(/^data:image\/\w+;base64,/, ""),
+        base64Data = req.body.imgData.replace(/^data:image\/\w+;base64,/, ""),
         dataBuffer = new Buffer(base64Data, 'base64'),
         imageName = uuid.v1() + '.png';
     fs.writeFile('./file' + imageName, dataBuffer, function(err) {
@@ -32,10 +34,12 @@ app.post('/base64', function(req, resp){
     });
 });
 
+// 文件上传
 app.post('/upload', multipartMiddleware, function(req, resp) {
   resp.end(JSON.stringify({'name': req.files.file.originalFilename,'size': req.files.file.size,path:req.files.file.path}));
 });
 
+// 预览、下载
 app.get('/:name',function(req,res,next){
     var queryOpts = querystring.parse(url.parse(req.url).query),
         fileName = req.params.name;
